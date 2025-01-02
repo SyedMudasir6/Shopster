@@ -1,17 +1,25 @@
-import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllProducts } from '../redux/features/ProductsSlice';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllProducts} from '../redux/features/ProductsSlice';
 import CustomHeader from '../components/CustomHeader';
 import fontfamily from '../constants/fontfamily';
 import colors from '../components/colors';
 import SliderHome from '../components/slider';
 
 const Home = () => {
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { products, isSuccess } = useSelector(state => state.products);
+  const {products, isSuccess} = useSelector(state => state.products);
   console.log('🚀 ~ file: Home.js:12 ~ Home ~ products:', products);
 
   useEffect(() => {
@@ -20,23 +28,42 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <CustomHeader title={'Home'} />
+      <CustomHeader
+        title={'Home'}
+        cart
+        onCardPress={() => navigation.navigate('Cart')}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <SliderHome />
-        <Text style={[styles.title, { alignSelf: 'center', fontSize: 20, textDecorationLine: 'underline' }]}>Trending Products</Text>
+        <Text
+          style={[
+            styles.title,
+            {
+              alignSelf: 'center',
+              fontSize: 20,
+              textDecorationLine: 'underline',
+            },
+          ]}>
+          Trending Products
+        </Text>
         <View style={styles.container2}>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={products?.products}
-            renderItem={({ item, index }) => {
+            renderItem={({item, index}) => {
               return (
                 <Pressable
-                  onPress={() => navigate('SingleProduct', { Product: item })}
+                  // onPress={() =>  avigate('SingleProduct', { Product: item })}
+                  onPress={() => {
+                    navigation.navigate('SingleProduct', {Product: item});
+                  }}
                   style={styles.cardBox}
                   key={item.id}>
-                  <Image source={{ uri: item.thumbnail }} style={styles.img} />
+                  <Image source={{uri: item.thumbnail}} style={styles.img} />
                   <View style={styles.footer}>
-                    <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
+                    <Text numberOfLines={1} style={styles.title}>
+                      {item.title}
+                    </Text>
                     <Text style={styles.price}>${item.price}</Text>
                   </View>
                 </Pressable>
@@ -55,14 +82,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 30,
-    backgroundColor: colors.backColor
-
+    backgroundColor: colors.backColor,
   },
   container2: {
     paddingHorizontal: '5%',
     marginTop: 15,
     paddingBottom: 30,
-    flex: 1
+    flex: 1,
   },
   img: {
     width: '100%',
@@ -73,13 +99,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 10,
     fontFamily: fontfamily.SemiBold,
-    color: colors.title
+    color: colors.title,
   },
   price: {
     fontSize: 15,
     marginTop: 10,
     fontFamily: fontfamily.Bold,
-    color: colors.price
+    color: colors.price,
   },
   cardBox: {
     marginBottom: 15,

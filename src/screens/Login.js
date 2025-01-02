@@ -1,11 +1,17 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import MyButton from '../components/MyButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/features/AuthSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {login} from '../redux/features/AuthSlice';
 import fontfamily from '../constants/fontfamily';
 import colors from '../components/colors';
-import Icon, { Icons } from '../components/Icon';
+import Icon, {Icons} from '../components/Icon';
 
 const Login = () => {
   // states
@@ -15,7 +21,7 @@ const Login = () => {
 
   // hooks
   const dispatch = useDispatch();
-  const { userData, isLoading } = useSelector(state => state.auth);
+  const {userData, isLoading} = useSelector(state => state.auth);
 
   // functions
   const handlingLogin = () => {
@@ -48,13 +54,12 @@ const Login = () => {
         />
         <TouchableOpacity
           style={styles.eyeIcon}
-          onPress={() => setShowPassword(!showPassword)}
-        >
+          onPress={() => setShowPassword(!showPassword)}>
           <Icon
             type={Icons.Ionicons}
             name={showPassword ? 'eye-outline' : 'eye-off-outline'}
             size={24}
-            color="grey"
+            color={colors.title}
           />
         </TouchableOpacity>
       </View>
@@ -72,14 +77,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: '5%',
     backgroundColor: colors.backColor,
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   title: {
     fontSize: 36,
     color: '#000',
     // fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: fontfamily.Bold
+    fontFamily: fontfamily.Bold,
   },
   input: {
     height: 50,
@@ -87,6 +92,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     borderColor: colors.borderColor,
     paddingHorizontal: 20,
+    color: colors.title,
   },
 
   passwordContainer: {
@@ -101,6 +107,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     paddingHorizontal: 20,
+    borderColor: colors.borderColor,
+    color: colors.title,
   },
   eyeIcon: {
     padding: 10,
